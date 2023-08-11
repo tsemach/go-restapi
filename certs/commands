@@ -1,0 +1,14 @@
+# creating root ca
+openssl genrsa -des3 -passout pass:`cat ssl.pass` -out ca.key 2048
+openssl req -x509 -new -nodes -passin pass:`cat ssl.pass` -key ca.key -sha256 -days 1825 -out ca.crt -subj "/C=IL/ST=Jerusalem/O=tsemach.org/OU=R&D/CN=GO RestAPI Root CA"
+
+# creating server cetificate
+openssl genrsa -out server.key 2048
+openssl req -new -key server.key -out server.csr -subj "/C=IL/ST=Jerusalem/O=tsemach.org/OU=R&D/CN=localhost"
+openssl x509 -req -in server.csr -passin pass:`cat ssl.pass`  -CA ca.crt -CAkey ca.key -CAcreateserial -out server.crt -days 825 -sha256 
+
+# creating client certificate
+openssl genrsa -out client.key 2048
+openssl req -new -key client.key -out client.csr -subj "/C=IL/ST=Jerusalem/O=tsemach.org/OU=R&D/CN=I-AM-THE-MAN"
+openssl x509 -req -in client.csr -passin pass:`cat ssl.pass`  -CA ca.crt -CAkey ca.key -CAcreateserial -out client.crt -days 825 -sha256 
+

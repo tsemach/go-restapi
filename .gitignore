@@ -1,0 +1,7 @@
+**/*.crt
+**/*.csr
+**/*.key
+**/*.pass
+
+bin/
+doc/
