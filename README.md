@@ -35,7 +35,7 @@ openssl req -x509 -new -nodes -passin pass:`cat ssl.pass` -key ca.key -sha256 -d
 ````
 ----
 
-## Create Server Certificate
+## Create Server Certificate Without SAN (just CN)
 ### Create server certificate key, ca.key
 ````bash
 openssl genrsa -out server.key 2048
@@ -47,6 +47,53 @@ openssl x509 -req -in server.csr -passin pass:`cat ssl.pass`  -CA ca.crt -CAkey 
 ````
 ----
 
+----
+## Create Server Certificate With SAN
+### Create CA
+````bash
+openssl \
+  req \
+  -subj "/C=IL/ST=Jerusalem/O=tsemach.org/OU=R&D/CN=GO RestAPI Root CA" \
+  -new \
+  -x509 \
+  -passout pass:`cat ssl.pass` \
+  -keyout ca.key \
+  -out ca.crt \
+  -days 36500
+````
+
+### Create Server Key
+````bash
+openssl genrsa -out server.key 2048
+````
+
+### Create Server CSR
+````bash
+openssl req \
+  -new \
+  -key server.key \
+  -out server.csr \
+  -subj "/C=IL/ST=Jerusalem/O=tsemach.org/OU=R&D/CN=localhost" \
+  -sha256 \
+  -extensions v3_req \
+  -reqexts SAN \
+  -config <(cat /etc/ssl/openssl.cnf <(printf "[SAN]\nsubjectAltName=DNS:localhost")) \
+````
+----
+````bash
+openssl \
+  x509 \
+  -req \
+  -days 36500 \
+  -in server.csr \
+  -CA ca.crt \
+  -CAkey ca.key \
+  -CAcreateserial \
+  -out server.crt \
+  -extfile <(cat /etc/ssl/openssl.cnf <(printf "[SAN]\nsubjectAltName=DNS:localhost")) \
+  -extensions SAN \
+  -passin pass:`cat ssl.pass`
+````
 ----
 ## Create Client Certificate
 ----

@@ -52,13 +52,8 @@ func main() {
 
 	tr := &http.Transport{
 		// TLSClientConfig: &tls.Config{InsecureSkipVerify: true, RootCAs: caCertPool},
-		TLSClientConfig: &tls.Config{InsecureSkipVerify: true, RootCAs: rootCAs, ServerName: "localhost"},
+		TLSClientConfig: &tls.Config{InsecureSkipVerify: false, RootCAs: rootCAs, ServerName: "localhost"},
 	}
-
-	// postBody, _ := json.Marshal(map[string]string{
-	// 	"Pid": "abc",
-	// 	"Tid": "xyz",
-	// })
 
 	bodyBody := &createStrucRequestType{
 		Pid: "abc",
