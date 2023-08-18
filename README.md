@@ -102,8 +102,17 @@ openssl genrsa -out client.key 2048
 
 openssl req -new -key client.key -out client.csr -subj "/C=IL/ST=Jerusalem/O=tsemach.org/OU=R&D/CN=I-AM-THE-MAN"
 
-openssl x509 -req -in client.csr -passin pass:`cat ssl.pass`  -CA ca.crt -CAkey ca.key -CAcreateserial -out client.crt -days 825 -sha256 
+openssl x509 -req -in client.csr -passin pass:`cat ssl.pass` -CA ca.crt -CAkey ca.key -CAcreateserial -out client.crt -days 825 -sha256 
 ----
+````
+
+## Create Client Certificate
+----
+````bash
+openssl genrsa -des3 -passout:`cat client.pass` -out client.key 2048
+openssl req -new -passin pass:`cat client.pass` -key client.key -out client.csr -subj "/C=IL/ST=Tel-Aviv/O=tsemach.org/OU=R&D/CN=I-AM-THE-MAN/GN=Something
+openssl x509 -req -days 3650 pass:`cat client.pass` -in client.csr -CA ca.crt -CAKey ca.key -CAcreateserial -out client.crt
+````
 
 ### Getting subject of a certificate
 `openssl x509 -in ca.crt  -noout -subject`
