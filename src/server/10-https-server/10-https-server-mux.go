@@ -86,5 +86,23 @@ func createMux() *http.ServeMux {
 		res.Write(jsonResp)
 	})
 
+	mux.HandleFunc("/api/v1/assign", func(res http.ResponseWriter, req *http.Request) {
+		var assign AssignBodyStruct
+
+		json.NewDecoder(req.Body).Decode(&assign)
+
+		fmt.Println("[/api/assign] req.body:")
+		JsonPrettyPrint(assign)
+
+		// jsonResp := makeResponse(name, "/api/v1/create")
+		resp := make(map[string]string)
+		resp["status"] = "ok"
+		resp["message"] = "assign message is:" + assign.Pid
+		resp["route"] = "/api/v1/assign"
+		jsonResp, _ := json.Marshal(resp)
+
+		res.Write(jsonResp)
+	})
+
 	return mux
 }
