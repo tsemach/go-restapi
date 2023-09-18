@@ -5,11 +5,29 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Launch Package",
+      "name": "04 Http Client",
       "type": "go",
       "request": "launch",
       "mode": "auto",
       "program": "src/client/04-http-client/04-http-client.go",
+      "args": ""
+    },
+    {
+      "name": "11 Http Server",
+      "type": "go",
+      "request": "launch",
+      "mode": "auto",
+      "program": "src/server/11-https-server/",
+      "cwd": "/home/tsemach/projects/go-restapi",
+      "args": ""
+    },
+    {
+      "name": "Multipart Upload",
+      "type": "go",
+      "request": "launch",
+      "mode": "auto",
+      "program": "multipart.go",
+      "cwd": "/home/tsemach/projects/go-restapi",
       "args": ""
     }
   ]

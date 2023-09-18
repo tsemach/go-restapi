@@ -34,7 +34,7 @@ func getTLSConfig(host, caFullPath string, certOpt tls.ClientAuthType) *tls.Conf
 	}
 
 	return &tls.Config{
-		ServerName: host,		
+		ServerName: host,
 		ClientAuth: certOpt,
 		ClientCAs:  caCertPool,
 		MinVersion: tls.VersionTLS12, // TLS versions below 1.2 are considered insecure - see https://www.rfc-editor.org/rfc/rfc7525.txt for details
@@ -42,12 +42,12 @@ func getTLSConfig(host, caFullPath string, certOpt tls.ClientAuthType) *tls.Conf
 }
 
 func createServer() *http.Server {
-	mux := createMux()
+	g := createGin()
 	tls := getTLSConfig(host, caCert, tls.ClientAuthType(certOpt))
 
 	return &http.Server{
 		Addr:      fmt.Sprintf(":%v", port),
-		Handler:   mux,
+		Handler:   g,
 		TLSConfig: tls,
 
 		ReadTimeout:  20 * time.Second,
