@@ -29,6 +29,15 @@
       "program": "multipart.go",
       "cwd": "/home/tsemach/projects/go-restapi",
       "args": ""
+    },
+    {
+      "name": "Multipart Upload Pipe",
+      "type": "go",
+      "request": "launch",
+      "mode": "auto",
+      "program": "multipart-pipe.go",
+      "cwd": "/home/tsemach/projects/go-restapi",
+      "args": ""
     }
   ]
 }
