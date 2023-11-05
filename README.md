@@ -117,7 +117,11 @@ openssl x509 -req -days 3650 pass:`cat client.pass` -in client.csr -CA ca.crt -C
 ### Getting subject of a certificate
 `openssl x509 -in ca.crt  -noout -subject`
 ----
-
-
-
 "/C=IL/ST=Jerusalem/O=tsemach.org/OU=R&D/CN=00000000-0000-0000-0000-000000000000"
+
+## Running the Server
+#### running the server by
+1. go run src/server/11-https-server/11-https-server*.go
+
+#### calling health api
+curl --cert certs/client.crt --key certs/client.key --cacert certs/ca.crt https://localhost:8080/health

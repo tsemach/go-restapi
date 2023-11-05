@@ -20,7 +20,7 @@ func createGin() *gin.Engine {
 		c.JSON(200, resp)
 	})
 
-	r.PUT("/api/v1/uplado", func(c *gin.Context) {
+	r.PUT("/api/v1/upload", func(c *gin.Context) {
 		// res http.ResponseWriter, req *http.Request
 		var create struct {
 			Pid string `json:"pid"`
